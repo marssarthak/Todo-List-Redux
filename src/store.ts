@@ -10,15 +10,14 @@ import {
   DELETE_TODO,
 } from "./actions";
 
-const ob = JSON.parse(localStorage.getItem("listState") || "{}");
-
 const savedTotalList: TodoType[] = JSON.parse(
-  localStorage.getItem("listState") || "{}"
-) || [
-  { action: "Buy milk", id: uuid(), done: false },
-  { action: "Buy eggs", id: uuid(), done: false },
-  { action: "submit assignment", id: uuid(), done: false },
-];
+  localStorage.getItem("listState") ||
+    JSON.stringify([
+      { action: "Buy milk", id: uuid(), done: false },
+      { action: "Buy eggs", id: uuid(), done: false },
+      { action: "submit assignment", id: uuid(), done: false },
+    ])
+);
 
 const initialState: StateType = {
   ToDoList: savedTotalList,
