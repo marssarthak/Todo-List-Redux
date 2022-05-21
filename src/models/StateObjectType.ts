@@ -1,6 +1,9 @@
-import { TodoType } from "./TodoType";
 export type StateType = {
-  ToDoList: TodoType[];
+  ToDoList: {
+    action: string;
+    id: string;
+    done: boolean;
+  }[];
   isCreateFormOn: boolean;
   isDeleteOn: boolean;
 };

@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TOGGLE_DELETE_ON } from "../actions";
-import { StateType } from "../models/stateType";
+import { StateType } from "../models/StateObjectType";
 
 type DeleteTodoProps = {};
 

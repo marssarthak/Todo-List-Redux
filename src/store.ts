@@ -1,6 +1,6 @@
 import { createStore, Reducer } from "redux";
 import { TodoType } from "./models/TodoType";
-import { StateType } from "./models/stateType";
+import { StateType } from "./models/StateObjectType";
 import uuid from "../node_modules/react-uuid/uuid";
 import {
   ADD_TODO,
@@ -10,8 +10,10 @@ import {
   DELETE_TODO,
 } from "./actions";
 
+const ob = JSON.parse(localStorage.getItem("listState") || "{}");
+
 const savedTotalList: TodoType[] = JSON.parse(
-  localStorage.getItem("listState")
+  localStorage.getItem("listState") || "{}"
 ) || [
   { action: "Buy milk", id: uuid(), done: false },
   { action: "Buy eggs", id: uuid(), done: false },

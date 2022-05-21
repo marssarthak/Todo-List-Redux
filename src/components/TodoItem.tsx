@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CHECKED, DELETE_TODO } from "../actions";
-import { StateType } from "../models/stateType";
+import { StateType } from "../models/StateObjectType";
 
 type TodoItemType = {
   isDone: boolean;

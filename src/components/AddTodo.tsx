@@ -1,7 +1,7 @@
 import { FC, memo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TODO, TOGGLE_SHOW_CREATE_FORM } from "../actions";
-import { StateType } from "../models/stateType";
+import { StateType } from "../models/StateObjectType";
 
 type AddTodoProps = {};
 

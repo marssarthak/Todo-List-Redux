@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { TodoType } from "../models/TodoType";
-import { StateType } from "../models/stateType";
+import { StateType } from "../models/StateObjectType";
 import TodoItem from "./TodoItem";
 import DeleteTodo from "./DeleteTodo";
 import AddTodo from "./AddTodo";
