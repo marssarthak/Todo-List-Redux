@@ -30,9 +30,8 @@ const reducer: Reducer<StateType> = (
 ) => {
   switch (action.type) {
     case CHECKED: {
-      const payload = action.payload;
       const newState = currentState.ToDoList.map((item) =>
-        item.id == payload ? { ...item, done: !item.done } : item
+        item.id == action.payload ? { ...item, done: !item.done } : item
       );
       localStorage.setItem("listState", JSON.stringify(newState));
       return { ...currentState, ToDoList: newState };
