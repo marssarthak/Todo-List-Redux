@@ -1,7 +1,7 @@
 import { createStore, Reducer } from "redux";
 import { TodoType } from "./models/TodoType";
 import { StateType } from "./models/StateObjectType";
-import uuid from "../node_modules/react-uuid/uuid";
+import uuid from "./uuid";
 import {
   ADD_TODO,
   CHECKED,
