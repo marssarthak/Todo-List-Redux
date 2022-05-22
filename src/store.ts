@@ -63,7 +63,6 @@ const reducer: Reducer<StateType> = (
       };
     }
     case DELETE_TODO: {
-      console.log("delete is on");
       const payload = action.payload;
       const newTodoList = currentState.ToDoList.filter(
         (item) => item.id != payload

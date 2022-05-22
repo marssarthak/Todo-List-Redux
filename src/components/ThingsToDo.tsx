@@ -7,9 +7,9 @@ import DeleteTodo from "./DeleteTodo";
 import AddTodo from "./AddTodo";
 
 const ToDo: FC = () => {
-  const todoList = useSelector((S: StateType) =>
-    S.ToDoList.filter((item) => !item.done)
-  );
+  const todoList = useSelector((S: StateType) => {
+    return S.ToDoList.filter((item) => !item.done);
+  });
   const doneList = useSelector((S: StateType) =>
     S.ToDoList.filter((item) => item.done)
   );

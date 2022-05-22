@@ -45,5 +45,3 @@ const TodoItem: FC<TodoItemType> = (props) => {
   );
 };
 export default TodoItem;
-
-//   props.shaking ? props.handelDelete(props.id) : props.onChecked(props.id);
