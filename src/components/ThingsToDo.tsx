@@ -1,44 +1,49 @@
-import React, { FC } from "react";
-import { useSelector } from "react-redux";
-import { TodoType } from "../models/TodoType";
+import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "../models/StateObjectType";
-import TodoItem from "./TodoItem";
 import DeleteTodo from "./DeleteTodo";
 import AddTodo from "./AddTodo";
+import { CHECKED, DELETE_TODO } from "../actions";
+import TodoDisplayer from "./TodoDisplayer";
+import {
+  CompleteTodoSelector,
+  IncompleteTodoSelector,
+} from "../selecters/TodoSelector";
 
 const ToDo: FC = () => {
-  const todoList = useSelector((S: StateType) => {
-    return S.ToDoList.filter((item) => !item.done);
-  });
-  const doneList = useSelector((S: StateType) =>
-    S.ToDoList.filter((item) => item.done)
-  );
-
-  const showList = (listName: TodoType[], emptyText: string) =>
-    listName.length > 0 ? (
-      listName.map((item) => (
-        <TodoItem
-          isDone={item.done}
-          id={item.id}
-          key={item.id}
-          action={item.action}
-        />
-      ))
-    ) : (
-      <p className="text-slate-500">{emptyText}</p>
-    );
-
+  const todoList = useSelector(IncompleteTodoSelector);
+  const doneList = useSelector(CompleteTodoSelector);
+  const isDeleteOn = useSelector((S: StateType) => S.isDeleteOn);
   const showTodoDelete = useSelector((S: StateType) => !S.isCreateFormOn);
+
+  const dispatch = useDispatch();
+
+  const handelChecked = (id: string) => {
+    isDeleteOn
+      ? dispatch({ type: DELETE_TODO, payload: id })
+      : dispatch({ type: CHECKED, payload: id });
+  };
+
   return (
     <div>
       <h1 className="font-medium text-lg mt-8 mb-3">Things to do</h1>
-      {showList(todoList, "No todos here!")}
+      <TodoDisplayer
+        handelChecked={handelChecked}
+        emptyText="No todos here!"
+        isDeleteOn={isDeleteOn}
+        listName={todoList}
+      />
       <div className={showTodoDelete ? "flex items-center gap-2" : " "}>
         <AddTodo />
         {showTodoDelete && <DeleteTodo />}
       </div>
       <h1 className="font-medium text-lg mt-4 mb-3">Things done</h1>
-      {showList(doneList, "No todos here!")}
+      <TodoDisplayer
+        handelChecked={handelChecked}
+        emptyText="No todos here!"
+        isDeleteOn={isDeleteOn}
+        listName={doneList}
+      />
     </div>
   );
 };
