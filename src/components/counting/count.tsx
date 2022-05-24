@@ -1,26 +1,24 @@
 import { FC, memo } from "react";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { StateType } from "../../models/StateObjectType";
-import { TodoType } from "../../models/TodoType";
+import { doneCount, notDoneCount } from "../../selecters/CountTodos";
 
-type countProps = {};
+type countProps = {
+  done: number;
+  not_done: number;
+};
 
-const Count: FC<countProps> = (props) => {
-  const doneCount = useSelector((S: StateType) =>
-    S.ToDoList.filter((data: TodoType) => data.done)
-  ).length;
-  const toDoCount = useSelector((S: StateType) =>
-    S.ToDoList.filter((data: TodoType) => !data.done)
-  ).length;
-
+const Count: FC<countProps> = ({ done, not_done }) => {
   return (
     <div className="flex items-center gap-5">
-      <p className="text-yellow-500 ">Task Done ~ {doneCount}</p>
-      <p className="text-red-600">Task To Do ~ {toDoCount}</p>
+      <p className="text-yellow-500 ">Task Done ~ {done}</p>
+      <p className="text-red-600">Task To Do ~ {not_done}</p>
     </div>
   );
 };
 
-Count.defaultProps = {};
+const mapStateToProps = (s: StateType) => {
+  return { done: doneCount(s), not_done: notDoneCount(s) };
+};
 
-export default memo(Count);
+export default memo(connect(mapStateToProps)(Count));

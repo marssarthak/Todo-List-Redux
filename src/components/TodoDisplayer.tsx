@@ -1,5 +1,12 @@
 import { FC, memo } from "react";
+import { connect } from "react-redux";
+import { StateType } from "../models/StateObjectType";
 import { TodoType } from "../models/TodoType";
+import {
+  CompleteTodoSelector,
+  DeleteChecker,
+  IncompleteTodoSelector,
+} from "../selecters/TodoSelector";
 import TodoItem from "./TodoItem";
 
 type TodoDisplayerProps = {
@@ -30,3 +37,20 @@ const TodoDisplayer: FC<TodoDisplayerProps> = ({
 TodoDisplayer.defaultProps = {};
 
 export default memo(TodoDisplayer);
+
+const completeTodoMapper = (S: StateType) => {
+  return {
+    listName: CompleteTodoSelector(S),
+    isDeleteOn: DeleteChecker(S),
+  };
+};
+
+const incompleteTodoMapper = (S: StateType) => {
+  return {
+    listName: IncompleteTodoSelector(S),
+    isDeleteOn: DeleteChecker(S),
+  };
+};
+
+export const CompleteTodoList = connect(completeTodoMapper)(TodoDisplayer);
+export const IncompleteTodoList = connect(incompleteTodoMapper)(TodoDisplayer);
