@@ -8,4 +8,6 @@ export const CompleteTodoSelector = (S: StateType) => {
   return S.ToDoList.filter((item) => item.done);
 };
 
-export const DeleteChecker = (S: StateType) => S.isDeleteOn;
+export const DeleteChecker = (S: StateType) => {
+  return S.isDeleteOn;
+};

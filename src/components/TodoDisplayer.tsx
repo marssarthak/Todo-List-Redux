@@ -1,31 +1,43 @@
 import { FC, memo } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { StateType } from "../models/StateObjectType";
 import { TodoType } from "../models/TodoType";
+import { CHECKED, DELETE_TODO } from "../actions";
 import {
   CompleteTodoSelector,
   DeleteChecker,
   IncompleteTodoSelector,
 } from "../selecters/TodoSelector";
-import TodoItem from "./TodoItem";
+import TodoRow from "./TodoRow";
 
 type TodoDisplayerProps = {
   emptyText: string;
   listName: TodoType[];
   isDeleteOn: boolean;
-  handelChecked: (id: string) => void;
 };
 
 const TodoDisplayer: FC<TodoDisplayerProps> = ({
   emptyText,
   listName,
-  ...rest
+  isDeleteOn,
 }) => {
+  const dispatch = useDispatch();
+  const handelChecked = (id: string) => {
+    isDeleteOn
+      ? dispatch({ type: DELETE_TODO, payload: id })
+      : dispatch({ type: CHECKED, payload: id });
+  };
+
   return (
     <>
       {listName.length > 0 ? (
         listName.map((item) => (
-          <TodoItem key={item.id} {...rest} todoItem={item} />
+          <TodoRow
+            key={item.id}
+            handelChecked={handelChecked}
+            isDeleteOn={isDeleteOn}
+            todoItem={item}
+          />
         ))
       ) : (
         <p className="text-slate-500">{emptyText}</p>
@@ -52,5 +64,9 @@ const incompleteTodoMapper = (S: StateType) => {
   };
 };
 
-export const CompleteTodoList = connect(completeTodoMapper)(TodoDisplayer);
-export const IncompleteTodoList = connect(incompleteTodoMapper)(TodoDisplayer);
+export const CompleteTodoList = memo(
+  connect(completeTodoMapper)(TodoDisplayer)
+);
+export const IncompleteTodoList = memo(
+  connect(incompleteTodoMapper)(TodoDisplayer)
+);
